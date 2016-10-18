@@ -19,6 +19,7 @@
         window.__data = {{ data | json | safe }}
       </script>
     {% endif %}
+    <script src="/dist/vendors.js"></script>
     <script src="{{ assetsPath }}/commons.js"></script>
     {% block scripts %}
 
