@@ -26,7 +26,7 @@
     "build-webpack": "webpack --verbose --colors --display-error-details --config webpack.config.production.js",
     "build-webpack-dll-dev": "webpack --config webpack.dll.js",
     "build-webpack-dll": "webpack --config webpack.dll.production.js",
-    "build": "npm run build-clean; npm run build-copy; npm run build-babel & npm run build-static & npm run build-webpack-dll; run build-webpack",
+    "build": "npm run build-clean; npm run build-copy; npm run build-babel & npm run build-static & npm run build-webpack-dll; npm run build-webpack",
     "dev": "parallelshell --kill-others \"npm run build-static-dev\" \"npm run webpack-dev\" \"npm run start-dev\"",
     "start": "parallelshell --kill-others \"npm run start-prod\"",
     "start-prod": "node ./node_modules/better-npm-run start-prod",

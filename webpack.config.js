@@ -59,6 +59,11 @@ module.exports = {
   },
   plugins: [
 
+    new webpack.DllReferencePlugin({
+      context: './src/client',
+      manifest: require('./dll/vendors-manifest.json')
+    }),
+
     new webpack.ProvidePlugin({
       riot: 'riot'
     }),
