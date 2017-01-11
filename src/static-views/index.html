@@ -1,7 +1,9 @@
 {% extends "_layouts/base.html" %}
 
 {% block styles %}
-  <link rel="stylesheet" href="{{ assetsPath }}/main.css">
+  {% if not __DEVELOPMENT__ %}
+    <link rel="stylesheet" href="{{ assets.main.css }}">
+  {% endif %}
 {% endblock %}
 
 {% block title %}
@@ -9,5 +11,7 @@ Static Index
 {% endblock %}
 
 {% block scripts %}
-  <script src="{{ assetsPath }}/main.js"></script>
+  {% if not __DEVELOPMENT__ %}
+    <script src="{{ assets.main.js }}"></script>
+  {% endif %}
 {% endblock %}

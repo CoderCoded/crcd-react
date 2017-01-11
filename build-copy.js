@@ -8,9 +8,10 @@ const ncp = Promise.promisify(require('ncp'))
 const copy = async () => {
   try {
     await Promise.all([
-      ncp('src/config', 'build/config'),
+      // ncp('src/config', 'build/config'),
       ncp('src/static', 'build/static'),
       ncp('package.json', 'build/package.json')
+      // ncp('assets.json', 'build/assets.json')
     ])
   } catch (e) {
     console.error(e)

@@ -17,7 +17,7 @@ module.exports = {
   output: {
     path: outputPath,
     filename: '[name].js',
-    chunkFilename: '[name]-[chunkhash].js',
+    chunkFilename: '[name]-[id].js',
     publicPath: 'http://' + host + ':' + port + '/dist/'
   },
   module: {
@@ -32,7 +32,7 @@ module.exports = {
         loader: 'html'
       }, {
         test: /\.json$/,
-        include: path.join(__dirname, 'node_modules', 'pixi.js'),
+        exclude: path.join(__dirname, 'node_modules'),
         loader: 'json'
       }, {
         test: /\.css$/,

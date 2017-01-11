@@ -50,8 +50,13 @@ if (__DEVELOPMENT__) {
   const webpackHost = process.env.WEBPACK_HOST || 'localhost'
   assetsPath = 'http://' + webpackHost + ':' + webpackPort + assetsPath
 }
+
+// Merge assets and dll assets for nunjuck templates
+let assets = require('./webpack-assets.json')
+
 nunjucksEnv.addGlobal('description', APP_DESC)
 nunjucksEnv.addGlobal('assetsPath', assetsPath)
+nunjucksEnv.addGlobal('assets', assets)
 nunjucksEnv.addGlobal('__DEVELOPMENT__', __DEVELOPMENT__)
 
 function fileHandler (root, fileStat, next) {

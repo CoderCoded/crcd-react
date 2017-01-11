@@ -3,7 +3,7 @@ var path = require('path')
 var webpack = require('webpack')
 var CleanPlugin = require('clean-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
-// var HtmlWebpackPlugin = require('html-webpack-plugin')
+var AssetsPlugin = require('assets-webpack-plugin')
 var strip = require('strip-loader')
 
 var relativeOutputPath = './build/static/dist'
@@ -17,8 +17,8 @@ module.exports = {
   },
   output: {
     path: outputPath,
-    filename: '[name].js',
-    chunkFilename: '[name]-[chunkhash].js',
+    filename: '[name]-[hash].js',
+    chunkFilename: '[name]-[id]-[chunkhash].js',
     publicPath: '/dist/'
   },
   module: {
@@ -59,19 +59,10 @@ module.exports = {
   },
   plugins: [
 
-    new webpack.DllReferencePlugin({
-      context: './src/client',
-      manifest: require('./dll/vendors-manifest.json')
-    }),
-
-    new webpack.ProvidePlugin({
-      riot: 'riot'
-    }),
-
     new CleanPlugin([relativeOutputPath]),
 
     // css files from the extract-text-plugin loader
-    new ExtractTextPlugin('[name].css'),
+    new ExtractTextPlugin('[name]-[hash].css'),
     new webpack.DefinePlugin({
       __DEVELOPMENT__: false
     }),
@@ -88,15 +79,17 @@ module.exports = {
     }),
 
     // optimizations
-    new webpack.optimize.CommonsChunkPlugin('commons', 'commons.js'),
+    new webpack.optimize.CommonsChunkPlugin('commons', 'commons-[hash].js'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
       }
-    })
+    }),
 
+    // assets in json file
+    new AssetsPlugin({filename: 'webpack-assets.json'})
   ],
   postcss: [
     require('postcss-import')({ addDependencyTo: webpack }),

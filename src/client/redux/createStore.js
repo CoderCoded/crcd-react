@@ -1,18 +1,15 @@
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
 import { apiMiddleware } from 'redux-api-middleware'
-import persistState from 'redux-localstorage'
 import authMiddleware from './middleware/authMiddleware'
 import { apiReqMiddleware, apiResMiddleware } from './middleware/jsonApiMiddleware'
 import thunk from 'redux-thunk'
 
 import log from '../utils/log'
 
-import auth from './modules/auth'
 import app from './modules/app'
-import preferences from './modules/preferences'
 
 let store = null
-let initialReducers = { auth, app, preferences }
+let initialReducers = { app }
 
 /**
  * Creates a redux store with middleware and reducers using an initial state
@@ -23,7 +20,6 @@ export default function createReduxStore (initialState) {
   let createStoreWithMiddleware
 
   createStoreWithMiddleware = compose(
-    persistState('preferences'),
     applyMiddleware(
       thunk,
       authMiddleware,
@@ -35,9 +31,7 @@ export default function createReduxStore (initialState) {
 
   // Don't pass extra data since Redux throws an error, each reducer handles their initialState
   store = createStoreWithMiddleware(combineReducers(initialReducers), {
-    auth: initialState.auth || {},
-    app: initialState.app || {},
-    preferences: initialState.preferences || {}
+    app: initialState.app || {}
   })
 
   store._reducers = initialReducers

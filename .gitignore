@@ -5,4 +5,5 @@ build/
 dll/
 .tmp/
 webpack-stats.json
+webpack-assets.json
 npm-debug.log

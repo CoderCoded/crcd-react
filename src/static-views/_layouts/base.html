@@ -5,7 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="{{ description }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ assetsPath }}/commons.css">
+    {% if not __DEVELOPMENT__ and assets.commons.css %}
+      <link rel="stylesheet" href="{{ assets.commons.css }}">
+    {% endif %}
     {% include "_includes/icons.html" %}
     {% block styles %}
 
@@ -14,18 +16,16 @@
   </head>
   <body>
     <div id="app">{% block content %}{% endblock %}</div>
-    {% if data %}
-      <script>
-        window.__data = {{ data | json | safe }}
-      </script>
+    {% if __DEVELOPMENT__ %}
+      <script src="/dist/vendors.js"></script>
+    {% else %}
+      <script src="{{ assets.commons.js }}"></script>
     {% endif %}
-    <script src="/dist/vendors.js"></script>
-    <script src="{{ assetsPath }}/commons.js"></script>
     {% block scripts %}
 
     {% endblock %}
     {% if __DEVELOPMENT__ %}
-    <script src="/reload/reload.js"></script>
+      <script src="/reload/reload.js"></script>
     {% endif %}
   </body>
 
