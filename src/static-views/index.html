@@ -11,7 +11,9 @@ Static Index
 {% endblock %}
 
 {% block scripts %}
-  {% if not __DEVELOPMENT__ %}
+  {% if __DEVELOPMENT__ %}
+    <script src="{{ assetsPath }}/main.js"></script>
+  {% else %}
     <script src="{{ assets.main.js }}"></script>
   {% endif %}
 {% endblock %}
