@@ -1,13 +1,8 @@
-import bunyan from 'browser-bunyan'
+import pino from 'pino'
 
-const log = bunyan.createLogger({
-  name: 'crcd-web-client',
-  streams: [
-    {
-      level: __DEVELOPMENT__ ? 'debug' : 'info',
-      stream: __DEVELOPMENT__ ? new bunyan.ConsoleFormattedStream() : new bunyan.ConsoleRawStream()
-    }
-  ]
+const log = pino({
+  name: 'crcd-html5',
+  level: __DEVELOPMENT__ ? 'debug' : 'info'
 })
 
 export default log

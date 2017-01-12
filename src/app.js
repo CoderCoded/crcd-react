@@ -14,17 +14,16 @@ import Express from 'express'
 import favicon from 'serve-favicon'
 import compression from 'compression'
 import path from 'path'
-import bunyan, { INFO, DEBUG } from 'bunyan'
+import pino from 'pino'
 import cuid from 'cuid'
 import serveStatic from 'serve-static'
 import { INTERNAL_SERVER_ERROR } from 'http-codes'
 
 const app = new Express()
 const server = http.createServer(app)
-global.log = bunyan.createLogger({
+global.log = pino({
   name: APP_NAME,
-  serializers: bunyan.stdSerializers,
-  level: __DEVELOPMENT__ ? DEBUG : INFO
+  level: __DEVELOPMENT__ ? 'debug' : 'info'
 })
 
 // Reload if dev mode
