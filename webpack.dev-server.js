@@ -16,7 +16,10 @@ var serverOptions = {
   publicPath: webpackConfig.output.publicPath,
   headers: { 'Access-Control-Allow-Origin': '*' },
   stats: { colors: true },
-  aggregateTimeout: 10000
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: true
+  }
 }
 
 console.info('Webpack dev server opts:')
