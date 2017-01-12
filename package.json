@@ -26,7 +26,7 @@
     "build-webpack": "webpack --verbose --colors --display-error-details --config webpack.config.production.js",
     "build-webpack-dll": "webpack --config webpack.dll.js",
     "build": "npm run build-clean; npm run build-copy; npm run build-babel; npm run build-webpack; npm run build-static",
-    "dev": "npm run build-webpack-dll; parallelshell --kill-others \"npm run build-static-dev\" \"npm run webpack-dev\" \"npm run start-dev\"",
+    "dev": "parallelshell --kill-others \"npm run build-static-dev\" \"npm run webpack-dev\" \"npm run start-dev\"",
     "start": "parallelshell --kill-others \"npm run start-prod\"",
     "start-prod": "node ./node_modules/better-npm-run start-prod",
     "start-dev": "node ./node_modules/better-npm-run start-dev | ./node_modules/pino/pretty.js",
