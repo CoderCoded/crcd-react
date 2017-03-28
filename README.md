@@ -43,6 +43,8 @@ Does the same as dev build but instead of the webpack dev server, it creates a
 webpack bundle. Static views are built in production mode and the express
 server is started. Defaults to port `8080`.
 
+**NOTE:** Build throws an error during first run since the build dir is missing. Shall be fixed.
+
 #### Serving with nginx or other http server
 
 Just copy and serve `build/static/` and the client-side application is included in `index.html`.
