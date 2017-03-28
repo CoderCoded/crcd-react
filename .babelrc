@@ -5,6 +5,11 @@
         "browsers": ["last 2 versions"]
       }
     }],
-    "stage-2"
+    "react",
+    "stage-2",
+    "bluebird"
+  ],
+  "plugins": [
+    "react-hot-loader/babel"
   ]
 }

@@ -1,38 +1,48 @@
-@import url(https://fonts.googleapis.com/css?family=Fira+Sans:400,700,500,400italic,300italic,300,500italic,700italic);
-@import url(https://fonts.googleapis.com/css?family=Titillium+Web:400,600,700,300);
-@import url(https://fonts.googleapis.com/icon?family=Material+Icons);
+@import './colors.css';
 
-/*
-* Typography
-* ======================================================================== */
+:root {
+  /*
+  * Typography
+  * ======================================================================== */
 
-$preferred-font: 'Titillium Web', 'Helvetica', 'Arial', sans-serif !default;
-$performance-font: 'Fira Sans', 'Arial', sans-serif !default;
+  --preferred-font: 'Helvetica', 'Arial', sans-serif;
+  --performance-font: 'Helvetica', 'Arial', sans-serif;
+  --font-size-base: 22px;
+  --font-size-s: 18px;
+  --font-size-xs: 14px;
 
-/*
-* Layout
-* ======================================================================== */
+  /*
+  * Layout
+  * ======================================================================== */
 
-$max-content-width:     1000px;
+  --max-content-width: 1000px;
 
-/*
-* Media queries breakpoints
-* ======================================================================== */
+  /*
+  * Media queries breakpoints
+  * ======================================================================== */
 
-$screen-xs-min:         480px;  /* Extra small screen / phone */
-$screen-sm-min:         768px;  /* Small screen / tablet */
-$screen-md-min:         992px;  /* Medium screen / desktop */
-$screen-lg-min:         1200px; /* Large screen / wide desktop */
+  --screen-xs-min: 480px;  /* Extra small screen / phone */
+  --screen-sm-min: 768px;  /* Small screen / tablet */
+  --screen-md-min: 992px;  /* Medium screen / desktop */
+  --screen-lg-min: 1200px; /* Large screen / wide desktop */
 
-/*
-* Animations
-* ======================================================================== */
+  /*
+  * Animations
+  * ======================================================================== */
 
-$animation-swift-out:   .45s cubic-bezier(0.3, 1, 0.4, 1) 0s;
+  --animation-swift-out: 0.45s cubic-bezier(0.3, 1, 0.4, 1) 0s;
 
+  /*
+  * Components
+  * ======================================================================== */
 
-/*
-* Components
-* ======================================================================== */
+  --navigation-width: 260px;
 
-$navigation-width:		260px;
+  /*
+  * Spinner
+  * ======================================================================== */
+
+  --heu-spinner-margin: 40px auto;
+  --heu-spinner-size: 40px;
+  --heu-spinner-color: var(--color-primary);
+}

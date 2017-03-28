@@ -1,5 +1,5 @@
 import createStore from './redux/createStore'
 
-const store = createStore(window.__data)
+const store = createStore({})
 
 export default store

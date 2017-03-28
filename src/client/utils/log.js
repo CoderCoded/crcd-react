@@ -1,7 +1,7 @@
 import pino from 'pino'
 
 const log = pino({
-  name: 'crcd-html5',
+  name: 'crcd-react',
   level: __DEVELOPMENT__ ? 'debug' : 'info'
 })
 

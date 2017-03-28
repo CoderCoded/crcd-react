@@ -4,7 +4,6 @@ var webpack = require('webpack')
 var CleanPlugin = require('clean-webpack-plugin')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var AssetsPlugin = require('assets-webpack-plugin')
-var strip = require('strip-loader')
 
 var relativeOutputPath = './build/static/dist'
 var outputPath = path.join(__dirname, relativeOutputPath)
@@ -13,7 +12,7 @@ module.exports = {
   target: 'web',
   devtool: 'source-map',
   entry: {
-    'main': './src/client/app.js'
+    'main': './src/client/main.production.js'
   },
   output: {
     path: outputPath,
@@ -22,49 +21,90 @@ module.exports = {
     publicPath: '/dist/'
   },
   module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loaders: [strip.loader('debug'), 'babel']
-      }, {
-        test: /\.json$/,
+    rules: [{
+      test: /\.js$/,
+      exclude: path.join(__dirname, 'node_modules'),
+      use: [{
+        loader: 'babel-loader'
+      }]
+    }, {
+      test: /\.html$/,
+      exclude: path.join(__dirname, 'node_modules'),
+      use: [{
+        loader: 'html-loader'
+      }]
+    }, {
+      test: /\.ya?ml$/,
+      exclude: path.join(__dirname, 'node_modules'),
+      use: [{
         loader: 'json-loader'
       }, {
-        test: /\.html$/,
-        exclude: path.join(__dirname, 'node_modules'),
-        loader: 'html'
-      }, {
-        test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style', 'css!postcss')
-      }, {
-        test: /\.(jpe?g|png|gif)$/i,
-        loader: 'url?limit=10000?hash=sha512&digest=hex&name=[hash].[ext]'
-      }, {
-        test: /\.woff(2)?(\?.*)?$/,
-        loader: 'url-loader?limit=10000&minetype=application/font-woff'
-      }, {
-        test: /\.(ttf|eot|svg)(\?.*)?$/,
+        loader: 'yaml-loader'
+      }]
+    }, {
+      test: /\.css$/,
+      exclude: path.join(__dirname, 'node_modules'),
+      use: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: [{
+          loader: 'css-loader',
+          options: {
+            importLoaders: 1
+          }
+        }, {
+          loader: 'postcss-loader'
+        }]
+      })
+    }, {
+      test: /\.(jpe?g|png|gif)$/i,
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          hash: 'sha512',
+          digest: 'hex',
+          name: '[hash].[ext]'
+        }
+      }]
+    }, {
+      test: /\.woff(2)?(\?.*)?$/,
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          minetype: 'application/font-woff'
+        }
+      }]
+    }, {
+      test: /\.(ttf|eot|svg)(\?.*)?$/,
+      use: [{
         loader: 'file-loader'
-      }
-    ]
+      }]
+    }]
   },
-  progress: true,
   resolve: {
-    modulesDirectories: [
+    modules: [
       'src/client',
       'node_modules'
     ],
-    extensions: ['', '.json', '.js']
+    extensions: ['.json', '.js'],
+    alias: {
+      'socket.io-client': 'socket.io-client/dist/socket.io.js'
+    }
   },
   plugins: [
 
     new CleanPlugin([relativeOutputPath]),
 
+    new webpack.ProvidePlugin({
+      riot: 'riot'
+    }),
+
     // css files from the extract-text-plugin loader
     new ExtractTextPlugin('[name]-[hash].css'),
     new webpack.DefinePlugin({
-      __DEVELOPMENT__: false
+      __DEVELOPMENT__: false,
+      APP_NAME: 'heu-rs-form'
     }),
 
     // ignore dev config
@@ -79,9 +119,7 @@ module.exports = {
     }),
 
     // optimizations
-    new webpack.optimize.CommonsChunkPlugin('commons', 'commons-[hash].js'),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({name: 'commons', filename: 'commons-[hash].js'}),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false
@@ -90,10 +128,5 @@ module.exports = {
 
     // assets in json file
     new AssetsPlugin({filename: 'webpack-assets.json'})
-  ],
-  postcss: [
-    require('postcss-import')({ addDependencyTo: webpack }),
-    require('precss')(),
-    require('autoprefixer')({ browsers: 'last 2 versions' })
   ]
 }

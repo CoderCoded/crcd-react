@@ -1,10 +1,9 @@
-global.Promise = require('bluebird')
 global.__DEVELOPMENT__ = process.env.NODE_ENV !== 'production'
 global.CONFIG = require('config')
 const APP_NAME = require('../package.json').name
 
 /**
- * Coded Coded fullstack base modified for client-only development
+ * Coded Coded development server for react apps
  */
 
 import 'babel-polyfill'
@@ -43,7 +42,7 @@ if (__DEVELOPMENT__) {
   app.use(serveStatic(path.join(__dirname, '../.tmp/static')))
 }
 
-// Bunyan logs for each request
+// Pino logs for each request
 app.use((req, res, next) => {
   req.log = log.child({ req_id: cuid() }, true)
   req.log.info({ req: req, xhr: req.xhr, user: req.user })

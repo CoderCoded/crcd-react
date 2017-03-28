@@ -1,20 +1,20 @@
-# Coder Coded HTML5 Boilerplate
+# Coder Coded React Boilerplate
 ---
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
-HTML5 App boilerplate with following technologies:
+A web app boilerplate with following technologies:
 
-- [Babel](http://babeljs.io/) for ES2015 and beyond
-- [Webpack](http://webpack.github.io/) for client-side bundles
-- [Redux](https://github.com/rackt/redux) for client-side state
-- [Pure](http://purecss.io/) for client-side styles
-- [PostCSS](https://twitter.com/postcss) with [PreCSS](https://jonathantneal.github.io/precss/) for style transforms
+- [Babel](http://babeljs.io/) for ES6 syntax
+- [Webpack](http://webpack.github.io/) for JS bundles
+- [React](https://facebook.github.io/react/) for view components
+- [Redux](http://redux.js.org/) for state handling
+- [PostCSS](https://twitter.com/postcss) for styles
 - [pino](https://github.com/pinojs/pino) for logging
-- [Express](http://expressjs.com/) for server-side app and API
+- [Express](http://expressjs.com/) for dev app
 - [Nunjucks](http://mozilla.github.io/nunjucks/) for server-side rendering
 
-Stripped down version of [crcd-fullstack](https://github.com/CoderCoded/crcd-fullstack) for client-side apps.
+Stripped down version of [crcd-fullstack](https://github.com/CoderCoded/crcd-fullstack) for client-side apps (which is now deprecated, we swapped [riot](http://riotjs.com/) with [react](https://facebook.github.io/react/)).
 
 #### Installation
 
@@ -28,8 +28,9 @@ npm install
 npm run dev
 ```
 
-Builds static views in dev mode and starts the express server and a webpack
-server which handles the hot reload.
+Builds static views in dev mode and then starts a development server and a
+webpack server which handles the hot reload. Defaults to port `3000` (with
+webpack in `3001`).
 
 #### Building and Running Production Server
 
@@ -40,7 +41,11 @@ npm run start
 
 Does the same as dev build but instead of the webpack dev server, it creates a
 webpack bundle. Static views are built in production mode and the express
-server is started.
+server is started. Defaults to port `8080`.
+
+#### Serving with nginx or other http server
+
+Just copy and serve `build/static/` and the client-side application is included in `index.html`.
 
 #### Folder structure
 

@@ -2,8 +2,6 @@ var path = require('path')
 var webpack = require('webpack')
 var outputPath = path.resolve(__dirname, './.tmp/static/dist')
 
-var AssetsPlugin = require('assets-webpack-plugin')
-
 module.exports = {
   devtool: 'source-map',
   entry: {
@@ -22,7 +20,6 @@ module.exports = {
     })
   ],
   resolve: {
-    root: path.resolve(__dirname, 'src', 'client'),
-    modulesDirectories: ['node_modules']
+    modules: [path.resolve(__dirname, 'src', 'client'), 'node_modules']
   }
 }

@@ -6,14 +6,14 @@ var port = parseInt(process.env.PORT, 10) || 3001
 
 module.exports = {
   target: 'web',
-  devtool: 'cheap-module-eval-source-map',
+  devtool: 'source-map',
   entry: {
     'main': [
+      'react-hot-loader/patch',
       'webpack-hot-middleware/client?path=http://' + host + ':' + port + '/__webpack_hmr',
-      './src/client/app.js'
+      './src/client/main.js'
     ]
   },
-  debug: true,
   output: {
     path: outputPath,
     filename: '[name].js',
@@ -21,41 +21,75 @@ module.exports = {
     publicPath: 'http://' + host + ':' + port + '/dist/'
   },
   module: {
-    loaders: [
-      {
-        test: /\.js$/,
-        exclude: path.join(__dirname, 'node_modules'),
-        loaders: ['babel']
+    rules: [{
+      test: /\.js$/,
+      exclude: path.join(__dirname, 'node_modules'),
+      use: [{
+        loader: 'babel-loader'
+      }]
+    }, {
+      test: /\.html$/,
+      exclude: path.join(__dirname, 'node_modules'),
+      use: [{
+        loader: 'html-loader'
+      }]
+    }, {
+      test: /\.ya?ml$/,
+      exclude: path.join(__dirname, 'node_modules'),
+      use: [{
+        loader: 'json-loader'
       }, {
-        test: /\.html$/,
-        exclude: path.join(__dirname, 'node_modules'),
-        loader: 'html'
+        loader: 'yaml-loader'
+      }]
+    }, {
+      test: /\.css$/,
+      exclude: path.join(__dirname, 'node_modules'),
+      use: [{
+        loader: 'style-loader'
       }, {
-        test: /\.json$/,
-        exclude: path.join(__dirname, 'node_modules'),
-        loader: 'json'
+        loader: 'css-loader',
+        options: {
+          importLoaders: 1
+        }
       }, {
-        test: /\.css$/,
-        loader: 'style!css!postcss'
-      }, {
-        test: /\.(jpe?g|png|gif)$/i,
-        loader: 'url?limit=10000?hash=sha512&digest=hex&name=[hash].[ext]'
-      }, {
-        test: /\.woff(2)?(\?.*)?$/,
-        loader: 'url-loader?limit=10000&minetype=application/font-woff'
-      }, {
-        test: /\.(ttf|eot|svg)(\?.*)?$/,
+        loader: 'postcss-loader'
+      }]
+    }, {
+      test: /\.(jpe?g|png|gif)$/i,
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          hash: 'sha512',
+          digest: 'hex',
+          name: '[hash].[ext]'
+        }
+      }]
+    }, {
+      test: /\.woff(2)?(\?.*)?$/,
+      use: [{
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          minetype: 'application/font-woff'
+        }
+      }]
+    }, {
+      test: /\.(ttf|eot|svg)(\?.*)?$/,
+      use: [{
         loader: 'file-loader'
-      }
-    ]
+      }]
+    }]
   },
-  progress: true,
   resolve: {
-    modulesDirectories: [
+    modules: [
       'src/client',
       'node_modules'
     ],
-    extensions: ['', '.json', '.js']
+    extensions: ['.json', '.js'],
+    alias: {
+      'socket.io-client': 'socket.io-client/dist/socket.io.js'
+    }
   },
   plugins: [
 
@@ -64,22 +98,13 @@ module.exports = {
       manifest: require('./dll/vendors-manifest.json')
     }),
 
-    new webpack.ProvidePlugin({
-      riot: 'riot'
-    }),
-
     // hot reload
     new webpack.HotModuleReplacementPlugin(),
     new webpack.IgnorePlugin(/\.json$/),
     new webpack.DefinePlugin({
       __DEVELOPMENT__: true
     }),
-    new webpack.optimize.CommonsChunkPlugin('commons', 'commons.js')
+    new webpack.optimize.CommonsChunkPlugin({name: 'commons', filename: 'commons.js'})
 
-  ],
-  postcss: [
-    require('postcss-import')({ addDependencyTo: webpack }),
-    require('precss')(),
-    require('autoprefixer')({ browsers: 'last 2 versions' })
   ]
 }

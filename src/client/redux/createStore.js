@@ -1,38 +1,48 @@
+import _ from 'lodash'
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux'
-import { apiMiddleware } from 'redux-api-middleware'
-import authMiddleware from './middleware/authMiddleware'
-import { apiReqMiddleware, apiResMiddleware } from './middleware/jsonApiMiddleware'
 import thunk from 'redux-thunk'
+
+import { createEpicMiddleware, combineEpics } from 'redux-observable'
+
+/**
+ * Add needed rxjs modules here
+ */
+import 'rxjs/add/operator/mapTo'
 
 import log from '../utils/log'
 
-import app from './modules/app'
+import * as app from '../modules/app'
 
 let store = null
-let initialReducers = { app }
+const initialReducers = {
+  [app.constants.NAME]: app.reducer
+}
+
+const epics = [
+  ..._.values(app.epics)
+]
+
+const rootEpic = combineEpics(...epics)
+const epicMiddleware = createEpicMiddleware(rootEpic)
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
 /**
  * Creates a redux store with middleware and reducers using an initial state
  * @param  {object} initialState - Initial state for the store
  * @return {object} store - The created store
  */
-export default function createReduxStore (initialState) {
+export default function createReduxStore (initialState = {}) {
   let createStoreWithMiddleware
 
-  createStoreWithMiddleware = compose(
+  createStoreWithMiddleware = composeEnhancers(
     applyMiddleware(
       thunk,
-      authMiddleware,
-      apiReqMiddleware,
-      apiMiddleware,
-      apiResMiddleware
+      epicMiddleware
     )
   )(createStore)
 
-  // Don't pass extra data since Redux throws an error, each reducer handles their initialState
-  store = createStoreWithMiddleware(combineReducers(initialReducers), {
-    app: initialState.app || {}
-  })
+  store = createStoreWithMiddleware(combineReducers(initialReducers))
 
   store._reducers = initialReducers
 
@@ -62,7 +72,12 @@ export default function createReduxStore (initialState) {
 
   store.log = log.child({childName: 'store'})
 
-  store.log.info('Store created.')
+  // store.log.info('Store created.')
 
   return store
+}
+
+// Prevent redux hot updates (replaceReducer could be used but we know only initial reducers)
+if (module.hot) {
+  module.hot.accept()
 }

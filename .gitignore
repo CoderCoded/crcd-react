@@ -1,6 +1,4 @@
 node_modules/
-server/static/dist/
-server/static/**/*.html
 build/
 dll/
 .tmp/

@@ -8,7 +8,4 @@
   "emcaFeatures": {
     "modules": true
   }
-  "plugins": [
-    "riot"
-  ]
 }
