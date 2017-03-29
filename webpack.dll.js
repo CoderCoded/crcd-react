@@ -3,6 +3,7 @@ var webpack = require('webpack')
 var outputPath = path.resolve(__dirname, './.tmp/static/dist')
 
 module.exports = {
+  target: 'web',
   devtool: 'source-map',
   entry: {
     vendors: [path.join(__dirname, 'src', 'client', 'vendors.js')]
@@ -11,6 +12,15 @@ module.exports = {
     path: outputPath,
     filename: '[name].js',
     library: '[name]'
+  },
+  module: {
+    rules: [{
+      test: /\.js$/,
+      include: path.join(__dirname, 'node_modules', 'quick-format-unescaped'), // This package doesn't support browser
+      use: [{
+        loader: 'babel-loader'
+      }]
+    }]
   },
   plugins: [
     new webpack.DllPlugin({

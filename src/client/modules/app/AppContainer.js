@@ -13,6 +13,7 @@ export class App extends Component {
     super(props)
     autobind(this)
     this.log = log.child({component: 'App'})
+    this.log.info('App created.')
   }
 
   static propTypes = {
@@ -28,12 +29,14 @@ export class App extends Component {
       epicTested
     } = this.props
 
-    return (<div>
-      <h2>React boilerplate with redux and redux-observable</h2>
-      <button onClick={() => testAction()}>Test</button>
-      <p>Test done: <strong>{ tested ? 'TRUE' : 'FALSE' }</strong></p>
-      <p>Epic test done: <strong> { epicTested ? 'TRUE' : 'FALSE' }</strong></p>
-    </div>)
+    return (
+      <div>
+        <h2>React boilerplate with redux and redux-observable</h2>
+        <button onClick={() => testAction()}>Test</button>
+        <p>Test done: <strong>{ tested ? 'TRUE' : 'FALSE' }</strong></p>
+        <p>Epic test done: <strong> { epicTested ? 'TRUE' : 'FALSE' }</strong></p>
+      </div>
+    )
   }
 }
 

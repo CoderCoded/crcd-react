@@ -16,6 +16,13 @@ A web app boilerplate with following technologies:
 
 Stripped down version of [crcd-fullstack](https://github.com/CoderCoded/crcd-fullstack) for client-side apps (which is now deprecated, we swapped [riot](http://riotjs.com/) with [react](https://facebook.github.io/react/)).
 
+#### Supported browsers
+
+Browser support can be adjusted in `.babelrc` using [babel-preset-env](https://github.com/babel/babel-preset-env). Default configuration:
+
+> last 2 versions
+> ie >= 10
+
 #### Installation
 
 ```
@@ -31,6 +38,8 @@ npm run dev
 Builds static views in dev mode and then starts a development server and a
 webpack server which handles the hot reload. Defaults to port `3000` (with
 webpack in `3001`).
+
+**Note** The dev server only works on a modern browser.
 
 #### Building and Running Production Server
 
@@ -64,3 +73,9 @@ Just copy and serve `build/static/` and the client-side application is included 
 - `build/` : Build output
   - `static/dist` : Webpack output
 - `.tmp/` : Temp builds in dev mode
+
+#### Attributions
+
+This boilerplate was originally based on [React Redux Universal Hot Example](https://github.com/erikras/react-redux-universal-hot-example/). Thanks to [erikras](https://github.com/erikras) and contributors for the awesome example.
+
+Also, [Jack Hsu](https://jaysoo.ca/) introduced [a clever way](https://jaysoo.ca/2016/02/28/organizing-redux-application/) of structuring a React app.
