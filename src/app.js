@@ -45,7 +45,16 @@ if (__DEVELOPMENT__) {
 // Pino logs for each request
 app.use((req, res, next) => {
   req.log = log.child({ req_id: cuid() }, true)
-  req.log.info({ req: req, xhr: req.xhr, user: req.user })
+  const {
+    headers,
+    xhr,
+    params
+  } = req
+  req.log.info('Request:', {
+    headers,
+    xhr,
+    params
+  })
   next()
 })
 
