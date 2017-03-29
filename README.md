@@ -20,7 +20,7 @@ Stripped down version of [crcd-fullstack](https://github.com/CoderCoded/crcd-ful
 
 Browser support can be adjusted in `.babelrc` using [babel-preset-env](https://github.com/babel/babel-preset-env). Default configuration:
 
-> last 2 versions
+> last 2 versions,
 > ie >= 10
 
 #### Installation
