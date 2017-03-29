@@ -65,9 +65,9 @@ Just copy and serve `build/static/` and the client-side application is included 
   - `static/` : Static files and webpack build output
   - `static-views/` : Nunjucks templates to be rendered as static html files into `static/`
   - `client/` : Source for client (built using Webpack)
-    - `components/` : Re-usable Riot components
-    - `containers/` : "Smart" Riot components that are used as wrappers etc.
-    - `redux/` : Everything related to redux (store, middlewares and modules)
+    - `components/` : Re-usable React components
+    - `modules/` : Application modules, usually containing a React container and its components plus redux related files
+    - `redux/` : Configuration for redux store and additional middleware
     - `styles/` : Shared styles etc.
     - `utils/` : Helpers etc.
 - `build/` : Build output
