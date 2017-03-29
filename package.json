@@ -4,7 +4,7 @@
   "description": "Coder Coded Pepper React Boilerplate",
   "author": "CoderCoded",
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "repository": {
     "type": "git",
     "url": "https://github.com/crcd/crcd-react"
@@ -117,7 +117,7 @@
     "http-codes": "^1.0.0",
     "js-yaml": "^3.8.2",
     "nunjucks": "^3.0.0",
-    "pino": "^4.0.3",
+    "pino": "^4.2.4",
     "serve-favicon": "^2.4.1",
     "serve-static": "^1.12.1"
   },

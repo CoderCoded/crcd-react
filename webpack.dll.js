@@ -13,15 +13,6 @@ module.exports = {
     filename: '[name].js',
     library: '[name]'
   },
-  module: {
-    rules: [{
-      test: /\.js$/,
-      include: path.join(__dirname, 'node_modules', 'quick-format-unescaped'), // This package doesn't support browser
-      use: [{
-        loader: 'babel-loader'
-      }]
-    }]
-  },
   plugins: [
     new webpack.DllPlugin({
       path: path.join(__dirname, 'dll', '[name]-manifest.json'),
